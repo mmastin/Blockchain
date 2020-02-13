@@ -37,6 +37,11 @@ def valid_proof(block_string, proof):
 
     return guess_hash[:3] == '000'
 
+# def submit_proof(new_proof):
+#     post_data = {
+#         'proof': new_proof,
+#         'id': id
+#     }
 
 if __name__ == '__main__':
     # What is the server address? IE `python3 miner.py https://server.com/api/`
@@ -50,6 +55,8 @@ if __name__ == '__main__':
     id = f.read()
     print("ID is", id)
     f.close()
+
+    coins = 0
 
     # Run forever until interrupted
     while True:
@@ -82,4 +89,8 @@ if __name__ == '__main__':
         # TODO: If the server responds with a 'message' 'New Block Forged'
         # add 1 to the number of coins mined and print it.  Otherwise,
         # print the message from the server.
-        pass
+        if data.get('message') == 'New Block Forged':
+            coins += 1
+            print(f'total coins: {coins}')
+        else:
+            print(data.get('message'))
